@@ -166,6 +166,9 @@ def add(request, app_label, model_name, mode_name='add',
         'model_title': model._meta.verbose_name,
         'form': form
     }
+    
+    print _get_template(request, app_label, model_name)
+    
     return render_to_response(
         _get_template(request, app_label, model_name),
         template_context,
