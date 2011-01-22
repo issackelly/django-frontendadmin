@@ -1,4 +1,5 @@
 {% load i18n %}
+{% load uni_form_tags %}
 
 <script>
 var form = $("form#form-{{ action }}-{{ model_title|slugify }}");
@@ -11,11 +12,7 @@ var form = $("form#form-{{ action }}-{{ model_title|slugify }}");
 </script>
 
 <div id="container-{{ action }}-{{ model_title|slugify }}">
-
-<fieldset class="frontendadmin">
-	<legend>{{ action }} {{ model_title }}</legend>
-
-	<form id="form-{{ action }}-{{ model_title|slugify }}" method="post" action="{{ action_url }}" enctype="multipart/form-data">
+	<form id="form-{{ action }}-{{ model_title|slugify }}" method="post" action="{{ action_url }}" enctype="multipart/form-data" class="uniForm">
 		{% csrf_token %}
 	{% spaceless %}
 	{% for k,v in request.GET.items %}
@@ -25,12 +22,12 @@ var form = $("form#form-{{ action }}-{{ model_title|slugify }}");
 	{% endfor %}
 	{% endspaceless %}
 
-		{{ form.as_p }}
-		<p class="submit">
+		{{ form|as_uni_form }}
+		<div class = "form_block">
 			<input type="submit" class="submit" value="{% trans "Submit" %}"/>
-		    <input type="submit" class="cancel" name="_cancel" value="{% trans "Cancel" %}"
+<input type="submit" class="cancel" name="_cancel" value="{% trans "Cancel" %}"
 		    	onclick="return confirm('{% trans "Are you sure to cancel this action?" %}');"/>
-		</p>
+      </div>
+    </fieldset>
 	</form>
-</fieldset>
 </div>
